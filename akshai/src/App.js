@@ -5,6 +5,7 @@ import Footer from './Footer';
 import './index.css';
 import { useState } from 'react';
 import Additems from './Additems';
+import Searchitem from './Searchitem';
 function App() {
   const [items, setItems] = useState(
     JSON.parse(localStorage.getItem('to do list'))
@@ -31,7 +32,8 @@ function App() {
     //     }
     // ]
   ) 
-    const [newItem, setNewItem] = useState('')
+  const [newItem, setNewItem] = useState('')
+  const [search,setSearch] = useState('')
     const addItem= (item) => {
     const id = items.length ? items[items.length - 1].id + 1 : 1;
     const addNewItem = {id,checked:false, item }
@@ -66,8 +68,12 @@ function App() {
         setNewItem={setNewItem}
         handleSubmit={handleSubmit}
       />
+      <Searchitem
+        search={search}
+        setSearch ={setSearch}
+      />
       <Content
-        items={items}
+        items={items.filter(item => ((item.item).toLowerCase()).includes(search.toLowerCase()))}
         handleCheck={handleCheck}
         handleDelete ={handleDelete}
       />
